@@ -40,10 +40,32 @@ function meow() {
 //
 function feed(){
    //cat_image.style.width = (cat_image.offsetWidth + 30.0) + 'px';
-   cat_image.style.width = (cat_image.width + 30.0) + 'px';
+   //cat_image.style.width = (cat_image.width + 30.0) + 'px';
+   var cat_width = (cat_image.width + 30.0) + 'px';
+   cat_img.style.width = cat_width;
 }
 
 function run(){
    //cat_image.style.width = (cat_image.offsetWidth - 30.0) + 'px';
    cat_image.style.width = (cat_image.width - 30.0) + 'px';
 }
+
+// Containers
+//
+// Arrays
+//
+var my_array = [1, 2, 3];
+
+// Object
+//
+var my_cat = {
+	name: 'fluffy',
+	type: 'fat',
+	sex: 'cat',
+	weight: 5.5,
+	previous_weights: [4, 3, 6]
+};
+
+my_cat['happines'] = 'happy'
+
+// to check a type of a variable use `typeof variable` 
