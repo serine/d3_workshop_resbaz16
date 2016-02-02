@@ -74,7 +74,7 @@ d3.json(dataUrl, function(nations){
    sqrt_scale.domain([0, 5e8]);
    sqrt_scale.range([0, 40]);
 
-   var c20 = d3.scale.category20();
+   var c20 = d3.scale.category10();
 
    var year_idx = document.getElementById("year_slider").value;
    var year_int = parseInt(year_idx)
@@ -110,7 +110,7 @@ d3.json(dataUrl, function(nations){
   			    })
 	    .style("fill",
 			    function(d){
-				    return c20(d.region[0]);
+				    return c20(d.region);
 			    });
 
       d3_link.exit().remove();
@@ -118,13 +118,17 @@ d3.json(dataUrl, function(nations){
       d3_link.transition()
 	      .ease("linear")
 	      .duration(200)
+  	    .attr("r", 
+			    function(d){
+				    return sqrt_scale(d.population[year_int-1950]);
+			    })
   	      .attr("cx",
   	  		    function(d){
-  	  			    return xScale(d.income[year_idx-1950]);
+  	  			    return xScale(d.income[year_int-1950]);
   	  		    })
   	      .attr("cy",
   	  		    function(d){
-  	  			    return yScale(d.lifeExpectancy[year_idx-1950]);
+  	  			    return yScale(d.lifeExpectancy[year_int-1950]);
 			    });
    };
 
