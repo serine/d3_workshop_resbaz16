@@ -19,19 +19,75 @@ d3.json(dataUrl, function(nations){
     frame.attr("width", frame_width);
     frame.attr("height", frame_height);
 
-    canvas.attr("tranform", "translate(" + margin.left + "," + margin.top + ")");
+    canvas.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     //canvas.attr("margin-top", margin.top)
     //canvas.attr("margin-left", margin.left)
-    var xScale = d3.scale.log();
-    xScale.domain([250, 1e5]);
-    xScale.range([0, canvas_width]);
+    var xScale = d3.scale.log()
+	    .domain([250, 1e5])
+	    .range([0, canvas_width]);
 
-    var xAxis_generator_function = d3.svg.axis().orient("bottom").scale(xScale);
+    var xAxis_generator_function = d3.svg.axis()
+	    .orient("bottom")
+	    .scale(xScale);
+
     canvas.append("g")
 	    .call(xAxis_generator_function)
 	    .attr("transform", "translate(0, " + canvas_height + ")")
 	    .attr("class", "x axis");
 
+    var yScale = d3.scale.linear()
+	    .domain([10,85])
+	    .range([canvas_height, 0]);
+
+    var yAxis_generator_function = d3.svg.axis()
+	    .orient("left")
+	    .scale(yScale);
+
+    canvas.append("g")
+	    .attr("class", "y axis")
+	    .call(yAxis_generator_function);
+
+    var data_canvas = canvas
+	    .append("g")
+	    .attr("class", "data_canvas");
+
+   d3.selectAll(".region_cb").on("change", function(){
+	   console.log(this);
+	   var region_type = this.value;
+	   console.log(this.value);
+
+	   var filtered_nations = nations.filter(function(nations_element){
+		   return nations_element.region == region_type
+	   });
+
+   });
+
+   var filtered_nations = nations.filter(function(nations_element){
+			   return nations_element.region == 'Sub-Saharan Africa'
+		   });
+
+   //console.log(nations);
+   //console.log(filtered_nations);
+//----------------------------------------------------------------------------------------------------
+    var d3_link = data_canvas
+	    .selectAll(".dot")
+	    .data(nations,
+			    function(d){
+				    return d.name;
+			    });
+
+    d3_link.enter()
+	    .append("circle")
+	    .attr("class", "dot")
+	    .attr("r", 5)
+	    .attr("cx",
+			    function(d){
+				    return xScale(d.income[0])
+			    })
+	    .attr("cy",
+			    function(d){
+				    return yScale(d.lifeExpectancy[0])
+			    });
 
     //var circle = canvas.append("circle")
     //var circle_att = {cx: 50, cy: 50, r: 40};
