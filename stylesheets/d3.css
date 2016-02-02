@@ -30,3 +30,7 @@ text {
   pointer-events: all;
   cursor: ew-resize;
 }
+
+label {
+   display: block;
+}
