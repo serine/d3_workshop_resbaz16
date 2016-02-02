@@ -81,7 +81,7 @@ d3.json(dataUrl, function(nations){
 
    d3.select("#year_slider").on("input",
 		   function(){
-			   year_idx = this.value;
+			   year_int = this.value;
                            update_function();
 		   });
 
@@ -118,7 +118,7 @@ d3.json(dataUrl, function(nations){
       d3_link.transition()
 	      .ease("linear")
 	      .duration(200)
-  	    .attr("r", 
+  	      .attr("r", 
 			    function(d){
 				    return sqrt_scale(d.population[year_int-1950]);
 			    })
